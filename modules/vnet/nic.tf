@@ -20,8 +20,11 @@ resource "azurerm_network_interface" "nic" {
   ip_configuration {
     name                          = "nic_conf"
     subnet_id                     = azurerm_subnet.subnet[each.key].id
-    private_ip_address_allocation = "Dynamic"
+    private_ip_address_allocation = "Static"
     public_ip_address_id          = azurerm_public_ip.public_ip.id
+    //public_ip_address_id          = azurerm_subnet.subnet[each.key].id == "vm1" ? azurerm_public_ip.public_ip.id : none
+
+    //public_ip_address_id = count.index == 1 ? azurerm_public_ip.public_ip.id : none
   }
 
   tags = {
